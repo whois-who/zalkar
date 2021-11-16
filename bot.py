@@ -6,7 +6,7 @@ from telebot import types
 TOKEN = '2068799269:AAFscpbtZzvFehgzn6au83gv7iWRABGsrUo'
 bot = telebot.TeleBot(TOKEN)
 
-JoinedFile = open("users.txt", "r")
+JoinedFile = open("user.txt", "r")
 JoinedUsers = set()
 for line in JoinedFile:
     JoinedUsers.add(line.strip())
@@ -14,7 +14,7 @@ JoinedFile.close()
 
 
 
-@bot.message_handler(commands=['special'])
+@bot.message_handler(commands=['mes'])
 def mess(message):
     for user in JoinedUsers:
         bot.send_message(user, message.text[message.text.find(' '):])
@@ -22,7 +22,7 @@ def mess(message):
 @bot.message_handler(commands=['start'])
 def welcome(message):
     if not str(message.chat.id) in JoinedUsers:
-        JoinedFile = open("users.txt", "a")
+        JoinedFile = open("user.txt", "a")
         JoinedFile.write(str(message.chat.id) + "\n")
         JoinedUsers.add(message.chat.id)
 
@@ -119,7 +119,7 @@ def lalala(message):
  
             bot.send_message(message.chat.id, 'Ответы на часто задаваемые вопросы 🤔', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Я не .понимаю вас')
+            bot.send_message(message.chat.id, 'Я не понимаю вас')
 
 
 @bot.callback_query_handler(func=lambda call: True)
